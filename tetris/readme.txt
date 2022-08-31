@@ -1,1 +1,1 @@
-to jest tetris kurwo
+
