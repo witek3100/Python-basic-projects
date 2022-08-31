@@ -1,4 +1,8 @@
+from field import Field
+import numpy as np
 
 class Board:
-    lenght: int
-    width: int
+
+    board: np.empty(25, 15)
+
+    def __int__(self):
