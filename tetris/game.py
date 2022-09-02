@@ -5,17 +5,18 @@ from brick import Brick
 
 class Game:
 
-    score: int
-    speed: float
-    current_brick: Brick
-    game_board: Board
-
     def __init__(self):
-        self.speed = 1.5
+        self.speed = 50
         self.score = 0
         self.game_board = Board()
         self.current_brick = None
 
     def new_brick(self):
         self.current_brick = Brick(30 * random.randint(1,13), 0)
+
+    def game_over(self) -> bool:
+        for i in self.game_board.board[0]:
+            if i == 1:
+                return True
+        return False
 

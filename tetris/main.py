@@ -13,21 +13,22 @@ time = pygame.time.Clock()
 game = Game()
 
 while run:
-    pygame.time.delay(100)
+
+    pygame.time.delay(int(game.speed)) #predkosc gry
 
     pygame.font.init()
-    instruction_font1 = pygame.font.SysFont('instruction font', 25)
-    instruction_text1 = instruction_font1.render('A/D -rotate brick             L-arrow/R-arrow - move brick', True, RED)
-    window.blit(instruction_text1, (10, 580))
+    instruction_font = pygame.font.SysFont('instruction font', 25)
+    instruction_text = instruction_font.render('A/D -rotate brick            L-arrow/R-arrow - move brick', True, RED) #wyswietlanie instrukcji
+    window.blit(instruction_text, (10, 580))
 
     for x in range(15):
         for y in range(19):
             if game.game_board.board[y, x] == 0:
-                pygame.draw.rect(window, (152,245,255), (x*30, y*30, 30, 30))
+                pygame.draw.rect(window, (152, 245, 255), (x*30, y*30, 30, 30))
             if game.game_board.board[y, x] == 2:
-                pygame.draw.rect(window, (102,205,0), (x * 30, y * 30, 30, 30))
+                pygame.draw.rect(window, (102, 205, 0), (x * 30, y * 30, 30, 30))
             if game.game_board.board[y, x] == 1:
-                pygame.draw.rect(window, (255,185,15), (x * 30, y * 30, 30, 30))
+                pygame.draw.rect(window, (255, 185, 15), (x * 30, y * 30, 30, 30))
 
     if game.current_brick is None:
         game.new_brick()
@@ -58,7 +59,19 @@ while run:
             game.current_brick = None
             break
 
-    game.game_board.update_board()
+    if game.game_board.update_board():
+        game.score += 15
+        game.speed = 40 - game.score * 0.2
+
+    score_font = pygame.font.SysFont('score font', 35)
+    score_text = score_font.render("Score = " + str(game.score), True, RED)  # wyswietlanie wyniku
+    window.blit(score_text, (10, 10))
+
+    if game.game_over():
+        game_over_font = pygame.font.SysFont('game over font', 50)
+        game_over_text = game_over_font.render("GAME OVER", True, RED)
+        window.blit(game_over_text, (125, 200))
+
 
     pygame.display.update()
     window.fill((0, 0, 0))
