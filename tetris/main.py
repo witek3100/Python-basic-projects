@@ -42,5 +42,6 @@ while run:
                 game.current_brick.move_down(30)
 
     game.current_brick.move_down(1)
+
     pygame.display.update()
     window.fill((0, 0, 0))

@@ -17,5 +17,5 @@ class Game:
         self.current_brick = None
 
     def new_brick(self):
-        self.current_brick = Brick(30 * random.randint(0,14), 0)
+        self.current_brick = Brick(30 * random.randint(1,13), 0)
 
