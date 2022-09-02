@@ -1,3 +1,5 @@
+import random
+
 from board import Board
 from brick import Brick
 
@@ -12,8 +14,8 @@ class Game:
         self.speed = 1.5
         self.score = 0
         self.game_board = Board()
-        self.current_brick = Brick(0, 0)
+        self.current_brick = None
 
     def new_brick(self):
-        self.current_brick = Brick(30, 30)
+        self.current_brick = Brick(30 * random.randint(0,14), 0)
 

@@ -35,16 +35,27 @@ class Brick:
         self.update_brick_fields()
 
     def move_right(self):
+        max = 0
+        for i in self.brick_fields:
+            if i[0] > max:
+                max = i[0]
 
-        self.x += 30
-        self.update_brick_fields()
+        if max < 420:
+            self.x += 30
+            self.update_brick_fields()
 
     def move_left(self):
-        self.x -= 30
-        self.update_brick_fields()
+        min = 420
+        for i in self.brick_fields:
+            if i[0] < min:
+                min = i[0]
 
-    def move_down(self):
-        self.y += 1
+        if min > 0:
+            self.x -= 30
+            self.update_brick_fields()
+
+    def move_down(self, y):
+        self.y += y
         self.update_brick_fields()
 
     def update_brick_fields(self):

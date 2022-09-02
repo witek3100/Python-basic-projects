@@ -1,5 +1,3 @@
-import random
-
 import pygame
 from game import Game
 
@@ -14,7 +12,7 @@ time = pygame.time.Clock()
 game = Game()
 
 while run:
-    pygame.time.delay(250)
+    pygame.time.delay(100)
 
     pygame.font.init()
     instruction_font1 = pygame.font.SysFont('instruction font', 25)
@@ -27,7 +25,6 @@ while run:
     for i in game.current_brick.brick_fields:
         pygame.draw.rect(window, game.current_brick.color, (i[0], i[1], 30, 30))
 
-    game.current_brick.move_down()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -41,6 +38,9 @@ while run:
                 game.current_brick.move_left()
             if event.key == pygame.K_RIGHT:
                 game.current_brick.move_right()
+            if event.key == pygame.K_DOWN:
+                game.current_brick.move_down(30)
 
+    game.current_brick.move_down(1)
     pygame.display.update()
     window.fill((0, 0, 0))
