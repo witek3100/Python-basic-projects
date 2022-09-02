@@ -17,7 +17,7 @@ while run:
 
     pygame.font.init()
     instruction_font1 = pygame.font.SysFont('instruction font', 25)
-    instruction_text1 = instruction_font1.render('A/D rotate brick             L-arrow/R-arrow - move brick', True, RED)
+    instruction_text1 = instruction_font1.render('A/D -rotate brick             L-arrow/R-arrow - move brick', True, RED)
     window.blit(instruction_text1, (10, 580))
 
     for x in range(15):
@@ -26,6 +26,8 @@ while run:
                 pygame.draw.rect(window, (152,245,255), (x*30, y*30, 30, 30))
             if game.game_board.board[y, x] == 2:
                 pygame.draw.rect(window, (102,205,0), (x * 30, y * 30, 30, 30))
+            if game.game_board.board[y, x] == 1:
+                pygame.draw.rect(window, (255,185,15), (x * 30, y * 30, 30, 30))
 
     if game.current_brick is None:
         game.new_brick()
@@ -49,7 +51,14 @@ while run:
                 game.current_brick.move_down(30)
 
     game.current_brick.move_down(1)
+    for i in game.current_brick.brick_fields:
+        if game.game_board.board[math.floor(i[1] / 30) + 1, math.floor(i[0]/30)] == 1 or game.game_board.board[math.floor(i[1] / 30) + 1, math.floor(i[0]/30)] == 2:
+            for j in game.current_brick.brick_fields:
+                game.game_board.board[math.floor(j[1] / 30), math.floor(j[0]/30)] = 1
+            game.current_brick = None
+            break
 
+    game.game_board.update_board()
 
     pygame.display.update()
     window.fill((0, 0, 0))

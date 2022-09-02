@@ -6,10 +6,7 @@ BLUE = (0, 0, 255)
 colors = [RED, GREEN, BLUE]
 
 class Brick:
-    x = 0
-    y = 0
-    rotation = 0
-    brick_fields = []
+
     brick_types = ['one', 'square', 'L', 'P', '3inrow']
 
     def __init__(self, x, y):
@@ -64,9 +61,9 @@ class Brick:
         if self.brick_type == 'square':
             self.brick_fields = [[self.x, self.y], [self.x, self.y - 30], [self.x + 30, self.y], [self.x + 30, self.y - 30]]
         if self.brick_type == '3inrow':
-            if self.rotation == 0 or 2:
+            if self.rotation == 0 or self.rotation == 2:
                 self.brick_fields = [[self.x, self.y], [self.x, self.y - 30], [self.x, self.y + 30]]
-            if self.rotation == 1 or 3:
+            if self.rotation == 1 or self.rotation == 3:
                 self.brick_fields = [[self.x, self.y], [self.x - 30, self.y], [self.x + 30, self.y]]
         if self.brick_type == 'L':
             if self.rotation == 0:
