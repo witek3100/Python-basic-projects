@@ -19,7 +19,7 @@ class Game:
     def brick_fell(self):
         for i in self.current_brick.brick_fields:
             m = self.game_board.board[math.floor(i[1] / 30) + 1, math.floor(i[0] / 30)]
-            if m == 1 or m == 2:  # sprawdzenie czy klocek spadl
+            if m == 1 or m == 2:
                 for j in self.current_brick.brick_fields:
                     self.game_board.board[math.floor(j[1] / 30), math.floor(j[0] / 30)] = 1
                 self.current_brick = None
