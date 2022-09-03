@@ -1,16 +1,16 @@
 import pygame
 from game import Game
-
-RED = (255, 0, 0)
+RED = (255, 0, 0)       #kolor wszystkich wyswietlanych informacji
 
 pygame.init()
 window = pygame.display.set_mode((450, 600))        #inicjalizacja okna gry
 pygame.display.set_caption("TETRIS")
-run = True
+
 time = pygame.time.Clock()
 
-game = Game()
+game = Game()       #tworzenie gry
 
+run = True
 while run:
 
     pygame.time.delay(int(game.speed))      #predkosc gry
@@ -41,9 +41,7 @@ while run:
 
     game.brick_fell()         #spradzenie czy klocek spadl
 
-    if game.game_board.update_board():
-        game.score += 15                                #usuwanie wypelnionych klockami rzedow i zwiekszanie wyniku
-        game.speed = 40 - game.score * 0.2
+    game.game_board.update_board()         #usuwanie wypelnionych klockami rzedow i zwiekszanie wynikud
 
     score_font = pygame.font.SysFont('score font', 35)
     score_text = score_font.render("Score = " + str(game.score), True, RED)  # wyswietlanie wyniku

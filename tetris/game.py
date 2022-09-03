@@ -41,3 +41,8 @@ class Game:
                 if event.key == pygame.K_DOWN:
                     self    .current_brick.move_down(30)
         return True
+
+    def update_board(self):
+        if self.game_board.update_board():
+            self.score += 15
+            self.speed = 40 - self.score * 0.2
