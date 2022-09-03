@@ -35,20 +35,7 @@ while run:
     for i in game.current_brick.brick_fields:
         pygame.draw.rect(window, game.current_brick.color, (i[0], i[1], 30, 30))      #rysowanie aktualnie spadajacego kolcka
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                game.current_brick.rotate_left()
-            if event.key == pygame.K_d:                                 #sterowanie ruchem klocka
-                game.current_brick.rotate_right()
-            if event.key == pygame.K_LEFT:
-                game.current_brick.move_left()
-            if event.key == pygame.K_RIGHT:
-                game.current_brick.move_right()
-            if event.key == pygame.K_DOWN:
-                game.current_brick.move_down(30)
+    run = game.controls()       #sterowanie klockem / wylaczanie gry
 
     game.current_brick.move_down(1)                 #spadanie klocka
 
