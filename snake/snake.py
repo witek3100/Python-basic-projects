@@ -15,3 +15,4 @@ class Snake:
         self.y += self.move_direction[1]
         if self.extend_snake == False:
             self.snake_fields.pop()
+

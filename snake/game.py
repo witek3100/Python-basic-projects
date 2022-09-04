@@ -38,7 +38,7 @@ class Game:
                 break
         return [x, y]
 
-    def point_earned(self):
+    def point_earned(self) -> bool:
         if self.point == [self.sneak.x, self.sneak.y]:
             self.score += 10
             self.point = None
