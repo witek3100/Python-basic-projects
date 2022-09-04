@@ -25,7 +25,18 @@ class Game:
         return True
 
     def new_point(self) -> []:
-        return [random.randint(1, 22), random.randint(1, 22)]
+        while True:
+            x = random.randint(1, 22)
+            y = random.randint(1, 22)
+            cnt = False
+            for i in self.sneak.snake_fields:
+                if i == [x, y]:
+                    cnt = True
+            if cnt:
+                continue
+            else:
+                break
+        return [x, y]
 
     def point_earned(self):
         if self.point == [self.sneak.x, self.sneak.y]:
@@ -38,3 +49,8 @@ class Game:
         for i in self.sneak.snake_fields:
             if i == [self.sneak.x, self.sneak.y]:
                 return True
+        if self.sneak.x < 1 or self.sneak.x > 23:
+            return True
+        if self.sneak.y < 1 or self.sneak.y > 23:
+            return True
+        return False

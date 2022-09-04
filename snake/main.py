@@ -1,3 +1,5 @@
+import time
+
 import pygame
 from game import Game
 
@@ -13,6 +15,7 @@ pygame.display.set_caption("SNAKE")
 game = Game()
 
 run = True
+
 while run:
 
     pygame.time.delay(200)
@@ -42,12 +45,15 @@ while run:
     window.blit(score_text, (10, 10))
 
     if game.game_over():
-        game_over_font = pygame.font.SysFont('game over font', 50)
+        game_over_font = pygame.font.SysFont('game over font', 100)
         game_over_text = game_over_font.render("GAME OVER", True, RED)  # wyswietlanie wyniku
-        window.blit(game_over_text, (300, 300))
+        window.blit(game_over_text, (156, 200))
         play_agian_font = pygame.font.SysFont('play again font', 30)
-        play_again_text = play_agian_font.render("your score: " + str(game.score) + "  press enter to play again", True, RED)
-        window.blit(play_again_text, (250, 330))
+        play_again_text = play_agian_font.render("your score: " + str(game.score) + "     press enter to play again...", True, RED)
+        window.blit(play_again_text, (165, 300))
+        pygame.display.update()
+        time.sleep(5)
+        run = False
 
     pygame.display.update()
     window.fill((0,0,0))
