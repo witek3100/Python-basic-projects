@@ -18,17 +18,17 @@ class Brick:
         self.color = random.choice(colors)
 
     def rotate_right(self):
-        if self.rotation < 4:
+        if self.rotation < 3:
             self.rotation += 1
         else:
             self.rotation = 0
         self.update_brick_fields()
 
     def rotate_left(self):
-        if self.rotation > 0:
-            self.rotation -= 1
-        else:
+        if self.rotation == 0:
             self.rotation = 4
+        else:
+            self.rotation -= 1
         self.update_brick_fields()
 
     def move_right(self):

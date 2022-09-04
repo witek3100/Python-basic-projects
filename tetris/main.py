@@ -37,11 +37,11 @@ while run:
 
     run = game.controls()       #sterowanie klockem / wylaczanie gry
 
-    game.current_brick.move_down(1)                 #spadanie klocka
+    game.current_brick.move_down(2)                 #spadanie klocka
 
     game.brick_fell()         #spradzenie czy klocek spadl
 
-    game.game_board.update_board()         #usuwanie wypelnionych klockami rzedow i zwiekszanie wynikud
+    game.update_board()         #usuwanie wypelnionych klockami rzedow i zwiekszanie wyniku
 
     score_font = pygame.font.SysFont('score font', 35)
     score_text = score_font.render("Score = " + str(game.score), True, RED)  # wyswietlanie wyniku

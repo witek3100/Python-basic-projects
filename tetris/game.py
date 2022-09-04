@@ -32,14 +32,14 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
                     self.current_brick.rotate_left()
-                if event.key == pygame.K_d:  # sterowanie ruchem klocka
+                if event.key == pygame.K_d:
                     self.current_brick.rotate_right()
                 if event.key == pygame.K_LEFT:
                     self.current_brick.move_left()
                 if event.key == pygame.K_RIGHT:
                     self.current_brick.move_right()
                 if event.key == pygame.K_DOWN:
-                    self    .current_brick.move_down(30)
+                    self.current_brick.move_down(30)
         return True
 
     def update_board(self):
