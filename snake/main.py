@@ -41,12 +41,12 @@ while run:
         game.sneak.extend_snake = True
 
     score_font = pygame.font.SysFont('score font', 25)
-    score_text = score_font.render("SCORE = " + str(game.score), True, RED)  # wyswietlanie wyniku
+    score_text = score_font.render("SCORE = " + str(game.score), True, RED)
     window.blit(score_text, (10, 10))
 
     if game.game_over():
         game_over_font = pygame.font.SysFont('game over font', 100)
-        game_over_text = game_over_font.render("GAME OVER", True, RED)  # wyswietlanie wyniku
+        game_over_text = game_over_font.render("GAME OVER", True, RED)
         window.blit(game_over_text, (156, 200))
         play_agian_font = pygame.font.SysFont('play again font', 30)
         play_again_text = play_agian_font.render("your score: " + str(game.score) + "     press enter to play again...", True, RED)
