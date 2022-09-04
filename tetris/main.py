@@ -17,7 +17,7 @@ while run:
 
     pygame.font.init()
     instruction_font = pygame.font.SysFont('instruction font', 25)
-    instruction_text = instruction_font.render('A/D -rotate brick            L-arrow/R-arrow - move brick', True, RED)        #wyswietlanie instrukci
+    instruction_text = instruction_font.render('A/D -rotate brick            L-arrow/R-arrow - move brick', True, RED)        #wyswietlanie instrukcji
     window.blit(instruction_text, (10, 580))
 
     for x in range(15):
@@ -29,7 +29,7 @@ while run:
             if game.game_board.board[y, x] == 1:
                 pygame.draw.rect(window, (255, 185, 15), (x * 30, y * 30, 30, 30))
 
-    if game.current_brick is None:         #tworzenie nowego kolcka jesli poprzedni jest juz na dole
+    if game.current_brick is None:         #tworzenie nowego kolcka, jesli poprzedni jest juz na dole
         game.new_brick()
 
     for i in game.current_brick.brick_fields:
