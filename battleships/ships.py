@@ -13,17 +13,20 @@ class Ship:
                 return False
         return True
 
-class Patrol_boat:
+class Patrol_boat(Ship):
     pass
 
-class Carrier:
+class Carrier(Ship):
     pass
 
-class Destroyer:
+class Destroyer(Ship):
     pass
 
-class Frigate:
-    pass
+class Frigate(Ship):
+
+    def __init__(self, x, y):
+        self.position = [x, y]
+        self.ship_fields = [Field(x, y), Field(x + 1, y)]
 
 
 
