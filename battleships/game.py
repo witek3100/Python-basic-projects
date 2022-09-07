@@ -1,5 +1,4 @@
 import random
-
 import pygame
 import math
 from ships import Ship
@@ -17,12 +16,26 @@ RED = (139,35,35)
 
 player_ships = []
 enemy_ships = []
+shot_fields = []
 
-def area_empty(ship_fields):
+def area_empty(ship_fields, b):
     not_empty_fields = []
-    for i in player_ships:
-        for j in i.ship_fields:
-            not_empty_fields.extend([[j.position[0], j.position[1]], [j.position[0], j.position[1] + 1], [j.position[0], j.position[1] - 1], [j.position[0] + 1, j.position[1]], [j.position[0] - 1, j.position[1]]])
+    not_empty_fields1 = [[x, -1] for x in range(11)]
+    not_empty_fields2 = [[x, 12] for x in range(12)]
+    not_empty_fields3 = [[-1, y] for y in range(12)]
+    not_empty_fields4 = [[12, y] for y in range(12)]
+    not_empty_fields = not_empty_fields1 + not_empty_fields2 + not_empty_fields3 + not_empty_fields4
+    if b:
+        for i in player_ships:
+            for j in i.ship_fields:
+                not_empty_fields.extend([[j.position[0], j.position[1]], [j.position[0], j.position[1] + 1], [j.position[0], j.position[1] - 1], [j.position[0] + 1, j.position[1]], [j.position[0] - 1, j.position[1]]])
+    if b == False:
+        for i in enemy_ships:
+            for j in i.ship_fields:
+                not_empty_fields.extend([[j.position[0], j.position[1]], [j.position[0], j.position[1] + 1],
+                                         [j.position[0], j.position[1] - 1], [j.position[0] + 1, j.position[1]],
+                                         [j.position[0] - 1, j.position[1]]])
+
     for x in ship_fields:
         if x.position in not_empty_fields:
             return False
@@ -85,14 +98,14 @@ while run:
                         ship_x = math.floor((mouse_x - 330) / 30)
                         ship_y = math.floor((mouse_y - 30) / 30)
                         sf = [Ship_Field(ship_x, ship_y)]
-                        if area_empty(sf):
+                        if area_empty(sf, 1):
                             player_ships.append(Ship(sf))
                             scnnt = False
                             while True:
                                 eship_x = random.randint(0, 11)
                                 eship_y = random.randint(0, 11)
                                 esf = [Ship_Field(eship_x, eship_y)]
-                                if area_empty(esf):
+                                if area_empty(esf, 0):
                                     enemy_ships.append(Ship(esf))
                                     break
                         else:
@@ -109,14 +122,14 @@ while run:
                         ship_x = math.floor((mouse_x - 330) / 30)
                         ship_y = math.floor((mouse_y - 30) / 30)
                         sf = [Ship_Field(ship_x, ship_y), Ship_Field(ship_x + 1, ship_y)]
-                        if area_empty(sf):
+                        if area_empty(sf, 1):
                             player_ships.append(Ship(sf))
                             scnnt = False
                             while True:
                                 eship_x = random.randint(0, 11)
                                 eship_y = random.randint(0, 11)
                                 esf = [Ship_Field(eship_x, eship_y), Ship_Field(eship_x + 1, eship_y)]
-                                if area_empty(esf):
+                                if area_empty(esf, 0):
                                     enemy_ships.append(Ship(esf))
                                     break
                         else:
@@ -133,14 +146,14 @@ while run:
                         ship_x = math.floor((mouse_x - 330) / 30)
                         ship_y = math.floor((mouse_y - 30) / 30)
                         sf = [Ship_Field(ship_x, ship_y), Ship_Field(ship_x + 1, ship_y), Ship_Field(ship_x - 1, ship_y)]
-                        if area_empty(sf):
+                        if area_empty(sf, 1):
                             player_ships.append(Ship(sf))
                             scnnt = False
                             while True:
                                 eship_x = random.randint(0, 11)
                                 eship_y = random.randint(0, 11)
                                 esf = [Ship_Field(eship_x, eship_y), Ship_Field(eship_x + 1, eship_y), Ship_Field(eship_x - 1, eship_y)]
-                                if area_empty(esf):
+                                if area_empty(esf, 0):
                                     enemy_ships.append(Ship(esf))
                                     break
                         else:
@@ -161,14 +174,14 @@ while run:
                         ship_x = math.floor((mouse_x - 330) / 30)
                         ship_y = math.floor((mouse_y - 30) / 30)
                         sf = [Ship_Field(ship_x, ship_y), Ship_Field(ship_x + 1, ship_y), Ship_Field(ship_x - 1, ship_y), Ship_Field(ship_x, ship_y - 1), Ship_Field(ship_x + 1, ship_y - 1), Ship_Field(ship_x + 2, ship_y)]
-                        if area_empty(sf):
+                        if area_empty(sf, 1):
                             player_ships.append(Ship(sf))
                             scnnt = False
                             while True:
                                 eship_x = random.randint(0, 11)
                                 eship_y = random.randint(0, 11)
                                 esf = [Ship_Field(eship_x, eship_y), Ship_Field(eship_x + 1, eship_y), Ship_Field(eship_x - 1, eship_y), Ship_Field(eship_x, eship_y - 1), Ship_Field(eship_x + 1, eship_y - 1), Ship_Field(eship_x + 2, eship_y)]
-                                if area_empty(esf):
+                                if area_empty(esf, 0):
                                     enemy_ships.append(Ship(esf))
                                     break
                         else:
@@ -180,6 +193,11 @@ while run:
             window.blit(ship_cannot_text, (35, 100))
 
     else:
+
+        your_shot_font = pygame.font.SysFont('your shot', 30)
+        your_shot_text = your_shot_font.render("YOUR SHOT... ", True, RED)
+        window.blit(your_shot_text, (35, 45))
+
         mouse_x = pygame.mouse.get_pos()[0]
         mouse_y = pygame.mouse.get_pos()[1]
         if 330 < mouse_x < 690 and 450 < mouse_y < 810:
@@ -188,6 +206,18 @@ while run:
                              (math.floor(mouse_x / 30) * 30, math.floor(mouse_y / 30) * 30, 30, 30))
         else:
             pygame.mouse.set_visible(True)
+
+        for event in ev:
+            if event.type == pygame.MOUSEBUTTONUP:
+                if 330 < mouse_x < 690 and 450 < mouse_y < 810:
+                    shot_x = math.floor((mouse_x - 330) / 30)
+                    shot_y = math.floor((mouse_y - 450) / 30)
+                    for i in enemy_ships:
+                        for j in i.ship_fields:
+                            if j.position == [shot_x, shot_y]:
+                                j.was_shot = True
+                    shot_fields.append([shot_x, shot_y])
+
 
     for i in player_ships:
         if len(i.ship_fields) > 5:
@@ -201,17 +231,33 @@ while run:
             pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + sx * 30, 33 + sy * 30, slen, swid))
 
     for i in enemy_ships:
-        print(enemy_ships[-1].ship_fields[0].position)
-        if len(i.ship_fields) > 5:
-            pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + i.ship_fields[2].position[0] * 30, 453 + i.ship_fields[2].position[1] * 30, 114, 25))
-            pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + i.ship_fields[3].position[0] * 30, 453 + i.ship_fields[4].position[1] * 30, 54, 54))
-        else:
-            sx = min(fx.position[0] for fx in i.ship_fields)
-            sy = min(fx.position[1] for fx in i.ship_fields)
-            slen = (max(fx.position[0] for fx in i.ship_fields) - sx + 1) * 30 - 6
-            swid = (max(fx.position[1] for fx in i.ship_fields) - sy + 1) * 30 - 6
-            pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + sx * 30, 453 + sy * 30, slen, swid))
+        if i.is_sunk():
+            if len(i.ship_fields) > 5:
+                pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + i.ship_fields[2].position[0] * 30, 453 + i.ship_fields[2].position[1] * 30, 114, 25))
+                pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + i.ship_fields[3].position[0] * 30, 453 + i.ship_fields[4].position[1] * 30, 54, 54))
+            else:
+                sx = min(fx.position[0] for fx in i.ship_fields)
+                sy = min(fx.position[1] for fx in i.ship_fields)
+                slen = (max(fx.position[0] for fx in i.ship_fields) - sx + 1) * 30 - 6
+                swid = (max(fx.position[1] for fx in i.ship_fields) - sy + 1) * 30 - 6
+                pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + sx * 30, 453 + sy * 30, slen, swid))
+
+    for i in shot_fields:
+        pygame.draw.circle(window, RED, [345 + i[0] * 30, 465 + i[1] * 30], 6)
+
+    for i in enemy_ships:
+        for j in i.ship_fields:
+            if j.was_shot == True:
+                pygame.draw.rect(window, RED, (335 + j.position[0] * 30, 460 + j.position[1] * 30, 20, 10))
+                pygame.draw.rect(window, RED, (340 + j.position[0] * 30, 455 + j.position[1] * 30, 10, 20))
 
 
     pygame.display.update()
+
+
+    if [1 for i in range(8)] == [i.is_sunk() for i in player_ships]:
+        print('Gameover')
+    if [1 for i in range(8)] == [i.is_sunk() for i in enemy_ships]:
+        print('Gameover')
+
 
