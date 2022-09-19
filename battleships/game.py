@@ -4,7 +4,6 @@ import math
 from ships import Ship
 from ship_field import Ship_Field
 
-
 GREY = (51, 51, 51)
 BLUE = (16,78,139)
 BRIGHTER_BLUE = (24,116,205)
@@ -16,7 +15,27 @@ RED = (139,35,35)
 
 player_ships = []
 enemy_ships = []
-shot_fields = []
+e_shot_fields = []
+p_shot_fields = []
+
+fields_to_shot = []
+for x in range(12):
+    for y in range(12):
+        fields_to_shot.append((random.randint(0, 100), [x, y]))
+fields_to_shot.sort(reverse=True)
+
+def computer_shot():
+
+    shot = fields_to_shot.pop()[1]
+    for i in player_ships:
+        for j in i.ship_fields:
+            if j.position == shot:
+                j.was_shot = True
+                fields_to_shot[fields_to_shot.index(j.position)][0] += 100
+
+
+    p_shot_fields.append(shot)
+
 
 def area_empty(ship_fields, b):
     not_empty_fields = []
@@ -216,19 +235,25 @@ while run:
                         for j in i.ship_fields:
                             if j.position == [shot_x, shot_y]:
                                 j.was_shot = True
-                    shot_fields.append([shot_x, shot_y])
+                    e_shot_fields.append([shot_x, shot_y])
+                    pygame.display.update()
 
+                    computer_shot()
 
     for i in player_ships:
+        color = EVEN_BRIGHTER_GRAY
+        if i.is_sunk():
+            color = RED
         if len(i.ship_fields) > 5:
-            pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + i.ship_fields[2].position[0] * 30, 33 + i.ship_fields[2].position[1] * 30, 114, 25))
-            pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + i.ship_fields[3].position[0] * 30, 33 + i.ship_fields[4].position[1] * 30, 54, 54))
+            pygame.draw.rect(window, color, (333 + i.ship_fields[2].position[0] * 30, 33 + i.ship_fields[2].position[1] * 30, 114, 25))
+            pygame.draw.rect(window, color, (333 + i.ship_fields[3].position[0] * 30, 33 + i.ship_fields[4].position[1] * 30, 54, 54))
         else:
             sx = min(fx.position[0] for fx in i.ship_fields)
             sy = min(fx.position[1] for fx in i.ship_fields)
             slen = (max(fx.position[0] for fx in i.ship_fields) - sx + 1) * 30 - 6
             swid = (max(fx.position[1] for fx in i.ship_fields) - sy + 1) * 30 - 6
-            pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + sx * 30, 33 + sy * 30, slen, swid))
+            pygame.draw.rect(window, color, (333 + sx * 30, 33 + sy * 30, slen, swid))
+
 
     for i in enemy_ships:
         if i.is_sunk():
@@ -242,8 +267,10 @@ while run:
                 swid = (max(fx.position[1] for fx in i.ship_fields) - sy + 1) * 30 - 6
                 pygame.draw.rect(window, EVEN_BRIGHTER_GRAY, (333 + sx * 30, 453 + sy * 30, slen, swid))
 
-    for i in shot_fields:
+    for i in e_shot_fields:
         pygame.draw.circle(window, RED, [345 + i[0] * 30, 465 + i[1] * 30], 6)
+    for i in p_shot_fields:
+        pygame.draw.circle(window, RED, [345 + i[0] * 30, 45 +  i[1] * 30], 6)
 
     for i in enemy_ships:
         for j in i.ship_fields:
@@ -251,9 +278,13 @@ while run:
                 pygame.draw.rect(window, RED, (335 + j.position[0] * 30, 460 + j.position[1] * 30, 20, 10))
                 pygame.draw.rect(window, RED, (340 + j.position[0] * 30, 455 + j.position[1] * 30, 10, 20))
 
+    for i in player_ships:
+        for j in i.ship_fields:
+            if j.was_shot == True:
+                pygame.draw.rect(window, RED, (335 + j.position[0] * 30, 40 + j.position[1] * 30, 20, 10))
+                pygame.draw.rect(window, RED, (340 + j.position[0] * 30, 35 + j.position[1] * 30, 10, 20))
 
     pygame.display.update()
-
 
     if [1 for i in range(8)] == [i.is_sunk() for i in player_ships]:
         print('Gameover')
